@@ -21,6 +21,6 @@ Steps:
 2. copy signature and look up the test nft with [solana explorer](https://explorer.solana.com/)
 
 
-# Links and Sources
+## Links and Sources
 
 [How to Mint a NFT on Solana](https://www.quicknode.com/guides/web3-sdks/how-to-mint-an-nft-on-solana)
