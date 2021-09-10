@@ -1,10 +1,10 @@
-const solanaWeb3 = require("@solana/web3.js");
-const splToken = require("@solana/spl-token");
+import * as solanaWeb3 from "@solana/web3.js";
+import * as splToken from "@solana/spl-token";
 
 async function createNFT() {
 
     // connect to cluster
-    let connection = new solanaWeb3.Connection(
+    const connection = new solanaWeb3.Connection(
         solanaWeb3.clusterApiUrl("devnet"),
         "confirmed",
     );
@@ -12,14 +12,14 @@ async function createNFT() {
     // generate a new wallet keypair and airdrop SOL
     // fromWallet: create new pair of public and private keys using
     //     Keypair.generate() method
-    let fromWallet = solanaWeb3.Keypair.generate();
+    const fromWallet = solanaWeb3.Keypair.generate();
     // The requestAirdrop() method takes a public Key, and the amount of
     // lamports in SOL you would like to receive. Lamports are Solana's
     // equivalent to wei, the smallest amount that a SOL can be broken into.
     // Most methods that require a number will default to the lamport
     // measurement. In this case, the LAMPORTS_PER_SOL is a constant that
     // represents 1 SOL worth of lamports.
-    let fromAirDropSignature = await connection.requestAirdrop(
+    const fromAirDropSignature = await connection.requestAirdrop(
         fromWallet.publicKey,
         solanaWeb3.LAMPORTS_PER_SOL
     );
@@ -31,7 +31,7 @@ async function createNFT() {
     await connection.confirmTransaction(fromAirDropSignature);
 
     // create new token mint
-    let mint = await splToken.Token.createMint(
+    const mint = await splToken.Token.createMint(
         connection, // connection to the solana network
         fromWallet, // the account that will pay the fee
         // the public key that has the authority to mint tokens of this type
@@ -48,7 +48,7 @@ async function createNFT() {
 
     // get the token account of the fromWallet Solana adress, if it does not
     // exist, create it
-    let fromTokenAccount = await mint.getOrCreateAssociatedAccountInfo(
+    const fromTokenAccount = await mint.getOrCreateAssociatedAccountInfo(
         fromWallet.publicKey
     );
 
@@ -57,11 +57,11 @@ async function createNFT() {
     // to the newly created wallet above.
 
     // generate a new wallet to recieve newly minted token
-    let toWallet = solanaWeb3.Keypair.generate();
+    const toWallet = solanaWeb3.Keypair.generate();
 
     // get the token account of the toWallet Solana address if it does not
     // exist, create it
-    let toTokenAccount = await mint.getOrCreateAssociatedAccountInfo(
+    const toTokenAccount = await mint.getOrCreateAssociatedAccountInfo(
         toWallet.publicKey
     );
 
@@ -85,7 +85,7 @@ async function createNFT() {
     );
 
     // add token transfer instructions to transaction
-    let transaction = new solanaWeb3.Transaction().add(
+    const transaction = new solanaWeb3.Transaction().add(
         splToken.Token.createTransferInstruction(
             splToken.TOKEN_PROGRAM_ID,
             fromTokenAccount.address,
@@ -97,7 +97,7 @@ async function createNFT() {
     );
 
     // sign transaction, broadcast, and confirm
-    let signature = await solanaWeb3.sendAndConfirmTransaction(
+    const signature = await solanaWeb3.sendAndConfirmTransaction(
         connection,
         transaction,
         [fromWallet],
@@ -105,7 +105,7 @@ async function createNFT() {
     );
 
     console.log("SIGNATURE", signature);
-};
+}
 
 createNFT();
 

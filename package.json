@@ -1,11 +1,12 @@
 {
   "name": "solana-nft-minter",
   "version": "0.1.0",
-  "main": "index.js",
+  "main": "main.js",
   "author": "Nicholas Loubser",
   "license": "MIT",
   "dependencies": {
     "@solana/spl-token": "^0.1.8",
     "@solana/web3.js": "^1.24.1"
-  }
+  },
+  "type": "module"
 }
