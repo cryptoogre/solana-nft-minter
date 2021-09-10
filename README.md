@@ -17,7 +17,7 @@ Steps:
 
 ## Usage
 
-1. run `node index` to run the index script
+1. run `node main` to run the index script
 2. copy signature and look up the test nft with [solana explorer](https://explorer.solana.com/)
 
 
